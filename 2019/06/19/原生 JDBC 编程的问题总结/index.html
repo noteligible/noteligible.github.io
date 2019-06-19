@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>原生 JDBC 编程的问题总结 | Noteligible&#39; Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MyBatis,JDBC">
+    <meta name="description" content="本文总结原生 JDBC 编程的一般步骤，总结其存在的问题，并附上典型 JDBC 示例。 原生 JDBC 开发步骤 加载数据库驱动 创建并获取数据库链接 创建 jdbc statement 对象 设置sql语句 设置sql语句中的参数（使用 preparedStatement） 通过 statement 执行 sql 并获取结果 对 sql 执行结果进行解析处理 释放资源（resultSet、pre">
+<meta name="keywords" content="MyBatis,JDBC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原生 JDBC 编程的问题总结">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/index.html">
+<meta property="og:site_name" content="Noteligible&#39; Blog">
+<meta property="og:description" content="本文总结原生 JDBC 编程的一般步骤，总结其存在的问题，并附上典型 JDBC 示例。 原生 JDBC 开发步骤 加载数据库驱动 创建并获取数据库链接 创建 jdbc statement 对象 设置sql语句 设置sql语句中的参数（使用 preparedStatement） 通过 statement 执行 sql 并获取结果 对 sql 执行结果进行解析处理 释放资源（resultSet、pre">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-19T16:16:18.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="原生 JDBC 编程的问题总结">
+<meta name="twitter:description" content="本文总结原生 JDBC 编程的一般步骤，总结其存在的问题，并附上典型 JDBC 示例。 原生 JDBC 开发步骤 加载数据库驱动 创建并获取数据库链接 创建 jdbc statement 对象 设置sql语句 设置sql语句中的参数（使用 preparedStatement） 通过 statement 执行 sql 并获取结果 对 sql 执行结果进行解析处理 释放资源（resultSet、pre">
+    
+        <link rel="alternate" type="application/atom+xml" title="Noteligible&#39; Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Noteligible</h5>
+          <a href="mailto:791516928@qq.com" title="791516928@qq.com" class="mail">791516928@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/noteligible" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">原生 JDBC 编程的问题总结</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">原生 JDBC 编程的问题总结</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-19T01:13:54.784Z" itemprop="datePublished" class="page-time">
+  2019-06-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Web开发/">Web开发</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原生-JDBC-开发步骤"><span class="post-toc-number">1.</span> <span class="post-toc-text">原生 JDBC 开发步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考代码"><span class="post-toc-number">2.</span> <span class="post-toc-text">参考代码</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题总结"><span class="post-toc-number">3.</span> <span class="post-toc-text">问题总结</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-原生 JDBC 编程的问题总结"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">原生 JDBC 编程的问题总结</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-19 09:13:54" datetime="2019-06-19T01:13:54.784Z"  itemprop="datePublished">2019-06-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Web开发/">Web开发</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文总结原生 JDBC 编程的一般步骤，总结其存在的问题，并附上典型 JDBC 示例。</p>
+<h2 id="原生-JDBC-开发步骤"><a href="#原生-JDBC-开发步骤" class="headerlink" title="原生 JDBC 开发步骤"></a>原生 JDBC 开发步骤</h2><ol>
+<li>加载数据库驱动</li>
+<li>创建并获取数据库链接</li>
+<li>创建 jdbc statement 对象</li>
+<li>设置sql语句</li>
+<li>设置sql语句中的参数（使用 preparedStatement）</li>
+<li>通过 statement 执行 sql 并获取结果</li>
+<li>对 sql 执行结果进行解析处理</li>
+<li>释放资源（resultSet、preparedstatement、connection）</li>
+</ol>
+<h2 id="参考代码"><a href="#参考代码" class="headerlink" title="参考代码"></a>参考代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">public class JdbcTest &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        //数据库连接</span><br><span class="line">        Connection connection = null;</span><br><span class="line">        //预编译的Statement，使用预编译的Statement提高数据库性能</span><br><span class="line">        PreparedStatement preparedStatement = null;</span><br><span class="line">        //结果集</span><br><span class="line">        ResultSet resultSet = null;</span><br><span class="line"> </span><br><span class="line">        try &#123;</span><br><span class="line">            // 加载数据库驱动</span><br><span class="line">            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);</span><br><span class="line">            // 数据库连接地址</span><br><span class="line">            String URL = &quot;jdbc:mysql://localhost:3306/demo? serverTimezone=GMT &amp;useUnicode=true&amp; characterEncoding=utf8&quot;;</span><br><span class="line">            // 用户名</span><br><span class="line">            String USER = &quot;root&quot;;</span><br><span class="line">            // 密码</span><br><span class="line">            String PASSWORD = &quot;root&quot;;</span><br><span class="line">            // 通过驱动管理类获取数据库链接</span><br><span class="line">            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);            </span><br><span class="line">            // 定义sql语句，&quot;?&quot;表示占位符</span><br><span class="line">            String sql = &quot;select * from users where name = ?&quot;;</span><br><span class="line">            // 获取预处理 statement</span><br><span class="line">            preparedStatement = connection.prepareStatement(sql); </span><br><span class="line">            // 设置参数，第一个参数为sql语句中参数的序号（从1开始），第二个参数为设置的参数值</span><br><span class="line">            preparedStatement.setString(1, &quot;张三&quot;);</span><br><span class="line">            // 向数据库发出sql执行查询，查询出结果集</span><br><span class="line">            resultSet = preparedStatement.executeQuery(); </span><br><span class="line">            // 遍历查询结果集</span><br><span class="line">            while (resultSet.next()) &#123;</span><br><span class="line">                System.out.println(resultSet.getString(&quot;id&quot;) + &quot;  &quot; + resultSet.getString(&quot;name&quot;));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            // 释放资源</span><br><span class="line">            if (resultSet != null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    resultSet.close();</span><br><span class="line">                &#125; catch (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (preparedStatement != null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    preparedStatement.close();</span><br><span class="line">                &#125; catch (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            if (connection != null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    connection.close();</span><br><span class="line">                &#125; catch (SQLException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><ol>
+<li><p>数据库连接时，使用时就创建，不使用时就立即释放，对数据库进行频繁地连接和释放，造成数据库资源浪费，从而影响数据库性能。</p>
+<p>解决方法：使用数据库连接池管理数据库连接。</p>
+</li>
+<li><p>将 sql 语句写在 Java 代码中，存在硬编码，如果 sql 语句修改，则需要重新编译 Java 代码，不利于系统维护。</p>
+<p>解决方法：将 sql 语句配置在 xml 配置文件中。</p>
+</li>
+<li><p>使用 preparedStatement 中向占位符号传参数值时，Java 代码中存在硬编码，不利于系统维护。</p>
+<p>解决方法：将 sql 语句及占位符号和参数全部配置在 xml 配置文件中。</p>
+</li>
+<li><p>对结果集解析麻烦，sql 变化导致解析代码变化，且解析前需要遍历，存在硬编码，不利于系统维护。</p>
+<p>将查询的结果集，自动映射成 Java 对象。</p>
+</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-06-19T16:16:18.017Z" itemprop="dateUpdated">2019-06-20 00:16:18</time>
+</span><br>
+
+
+        
+        这里可以写作者留言，标签和 hexo 中所有变量及辅助函数等均可调用，示例：<a href="/2019/06/19/原生 JDBC 编程的问题总结/" target="_blank" rel="external">http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Noteligible">
+            Noteligible
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JDBC/">JDBC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&title=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&title=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/19/MyBatis/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">MyBatis</h4>
+      </a>
+    </div>
+  
+
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Noteligible &copy; 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&title=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&title=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《原生 JDBC 编程的问题总结》 — Noteligible' Blog&url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/06/19/原生 JDBC 编程的问题总结/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACuUlEQVR42u3ay27DQAgF0Pz/T6dSV5UaOxcY+pCOV1Viu3NmMRDg8Yiv5+d19fnX6/7+q2+TZ+/fObrw8PDwWku/upJ7vt9/teh8m+6fzdeAh4eHt8e7P4irjPxAP/VfLj/Hw8PD+1VeL0jkS8lJeHh4eP+Ll/zqP1sjmWwZHh4e3h6verhXCwfVcnDynsO1Fjw8PLyYV22A/YW/F/t7eHh4eIOu+uToT47paumhvFo8PDy8Bd5kcKrXyqqmv/kaCr8Y8PDw8Aa8+xJDNdnNv70/7pOtj4q5eHh4eAu8fCl5mjtp+Z8tB+Ph4eHt8Xr5Z/XQz8cLetv0Bo+Hh4e3wJsXWAvHdDHYnBoLw8PDw5vz5iNNeZkgLyX0qtEvLHh4eHgLvLzh1AsMk0ZaL8UvRzw8PDy8Ii8vwiZDAL0xrI1mGx4eHt4er5dAnypYVLcmD0V4eHh4P8OrHtZ5C7832pUHpyj64eHh4R3i9YqzvWQ3xydBK3onHh4e3hqv12fPRwR6AwTJe94EDDw8PLxlXvXVvaM8Sd97AePFOvHw8PCWedUf/L2WVRXcCw94eHh4e7y8TzS/eqWN6kou78TDw8M7yusNVFWXO9/QalqPh4eHt8Grjknl6XKyNWdHB97MRODh4eEd4uWF0Twk3N9zKpXPtwAPDw/vLC85yqvIXnk3HyMobC4eHh7eMi9/uHpM79VU36wTDw8Pb4G3XWCdD2lVm17Rs3h4eHgD3rN45WEgLwFXl14ol+Dh4eEt8M6OTCVBZTJMkBcp8PDw8LZ5vZb/fLwgKSIUOnhX24eHh4e3xsvT3zxIJKlwgh/VWvDw8PB+lZcnxMlxPy8oRNuBh4eH9wd4k0X3Gmz5Frz4HA8PD2+N1xt+qo4X9EYHeuUPPDw8vD3eqQZYXmjIk+mE2hwXwMPDw+vwPgBRBcU6P72XmwAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Noteligible' Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Noteligible' Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
