@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>MyBatis 概述 | Noteligible&#39; Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="MyBatis">
+    <meta name="description" content="本文对 MyBatis 做一个简单介绍，包括框架原理，执行过程，DAO开发方法，输入输出映射及动态sql。 MyBatis介绍MyBatis 原本是 apache 的一个开源项目 iBatis, 2010年这个项目由 apache software foundation 迁移到了 google code，并且改名为MyBatis。2013年11月迁移到 Github下（https://github">
+<meta name="keywords" content="MyBatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis 概述">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/MyBatis 概述/index.html">
+<meta property="og:site_name" content="Noteligible&#39; Blog">
+<meta property="og:description" content="本文对 MyBatis 做一个简单介绍，包括框架原理，执行过程，DAO开发方法，输入输出映射及动态sql。 MyBatis介绍MyBatis 原本是 apache 的一个开源项目 iBatis, 2010年这个项目由 apache software foundation 迁移到了 google code，并且改名为MyBatis。2013年11月迁移到 Github下（https://github">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-19T16:43:11.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MyBatis 概述">
+<meta name="twitter:description" content="本文对 MyBatis 做一个简单介绍，包括框架原理，执行过程，DAO开发方法，输入输出映射及动态sql。 MyBatis介绍MyBatis 原本是 apache 的一个开源项目 iBatis, 2010年这个项目由 apache software foundation 迁移到了 google code，并且改名为MyBatis。2013年11月迁移到 Github下（https://github">
+    
+        <link rel="alternate" type="application/atom+xml" title="Noteligible&#39; Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Noteligible</h5>
+          <a href="mailto:791516928@qq.com" title="791516928@qq.com" class="mail">791516928@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/noteligible" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">MyBatis 概述</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">MyBatis 概述</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-19T01:24:45.000Z" itemprop="datePublished" class="page-time">
+  2019-06-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MyBatis介绍"><span class="post-toc-number">1.</span> <span class="post-toc-text">MyBatis介绍</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MyBatis-架构"><span class="post-toc-number">2.</span> <span class="post-toc-text">MyBatis 架构</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#MyBatis-开发-DAO-的方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">MyBatis 开发 DAO 的方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#原始-DAO"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">原始 DAO</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Mapper-动态代理开发"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">Mapper 动态代理开发</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#输入映射和输出映射"><span class="post-toc-number">4.</span> <span class="post-toc-text">输入映射和输出映射</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#输入映射"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">输入映射</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#输出映射"><span class="post-toc-number">4.0.2.</span> <span class="post-toc-text">输出映射</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#动态sql"><span class="post-toc-number">5.</span> <span class="post-toc-text">动态sql</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-MyBatis 概述"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">MyBatis 概述</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-19 09:24:45" datetime="2019-06-19T01:24:45.000Z"  itemprop="datePublished">2019-06-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/JavaWeb/">JavaWeb</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文对 MyBatis 做一个简单介绍，包括框架原理，执行过程，DAO开发方法，输入输出映射及动态sql。</p>
+<h2 id="MyBatis介绍"><a href="#MyBatis介绍" class="headerlink" title="MyBatis介绍"></a>MyBatis介绍</h2><p>MyBatis 原本是 apache 的一个开源项目 iBatis, 2010年这个项目由 apache software foundation 迁移到了 google code，并且改名为MyBatis。2013年11月迁移到 Github下（<a href="https://github.com/mybatis/mybatis-3/releases）。" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3/releases）。</a></p>
+<p>MyBatis 是一个优秀的持久层框架，它对 JDBC 的操作数据库的过程进行封装，使开发者只需要关注 sql 本身，而不需要花费精力去处理例如注册驱动、创建 connection、创建 statement、手动设置参数、结果集检索等 JDBC 繁杂的过程代码。</p>
+<p>Mybatis 通过 xml 或 注解 的方式将要执行的各种 statement（statement、preparedStatemnt、CallableStatement）配置起来，并通过 java 对象和 statement中 的 sql 进行映射生成最终执行的 sql 语句，最后由 MyBatis 框架执行 sql 并将结果集映射成 Java 对象并返回。</p>
+<h2 id="MyBatis-架构"><a href="#MyBatis-架构" class="headerlink" title="MyBatis 架构"></a>MyBatis 架构</h2><p>1、MyBatis 配置文件。</p>
+<p>SqlMapConfig.xml：此文件作为 MyBatis 的全局配置文件，配置了 MyBatis 的运行环境等信息。</p>
+<p>mapper.xml：sql映射文件，配置了操作数据库的 sql 语句，此文件需要在 SqlMapConfig.xml 中加载。</p>
+<p>2、通过 MyBatis 环境等配置信息构造 SqlSessionFactory（会话工厂）。</p>
+<p>3、由会话工厂创建 SqlSession（会话），操作数据库需要通过 SqlSession 进行。</p>
+<p>4、MyBatis 底层自定义了 Executor 执行器接口操作数据库，Executor 接口有两个实现，一个是基本执行器、一个是缓存执行器。</p>
+<p>5、Mapped Statement 也是 MyBatis 一个底层封装对象，它包装了 MyBatis 配置信息及 sql 映射信息等，mapper.xml 文件中一个 sql 对应一个 Mapped Statement 对象，sql 的 id 即是 Mapped statement 的 id。</p>
+<p>6、Mapped Statement 对 sql 执行输入参数进行定义，包括 HashMap、基本类型、pojo，Executor 通过 Mapped Statement 在执行 sql 前将输入的 Java 对象映射至 sql 中，输入参数映射就是 JDBC 编程中对 preparedStatement 设置参数。</p>
+<p>7、Mapped Statement 对 sql 执行输出结果进行定义，包括 HashMap、基本类型、pojo，Executor 通过 Mapped Statement 在执行 sql 后将输出结果映射至 Java 对象中，输出结果映射过程相当于 JDBC 编程中对结果的解析处理过程。</p>
+<p>三、MyBatis 运行过程<br>1、配置 MyBatis 的配置文件：mybatis-config.xml（名称不固定）。</p>
+<p>2、通过配置文件，加载 MyBatis 运行环境，创建 SqlSessionFactory 会话工厂（SqlSessionFactory 在实际使用时按单例方式）。</p>
+<p>3、通过 SqlSessionFactory 创建 SqlSession。SqlSession 是一个面向用户接口（提供操作数据库方法），实现对象是线程不安全的，建议 SqlSession 的应用场合在方法体内。</p>
+<p>4、调用 SqlSession 的方法去操作数据。如果需要提交事务，需要执行SqlSession的commit()方法。</p>
+<p>5、释放资源，关闭 SqlSession。</p>
+<h2 id="MyBatis-开发-DAO-的方法"><a href="#MyBatis-开发-DAO-的方法" class="headerlink" title="MyBatis 开发 DAO 的方法"></a>MyBatis 开发 DAO 的方法</h2><p>使用 MyBatis 开发 Dao 通常有两个方法：原始 Dao 、Mapper 动态代理开发（官方推荐）。</p>
+<h4 id="原始-DAO"><a href="#原始-DAO" class="headerlink" title="原始 DAO"></a>原始 DAO</h4><p>需要程序员编写 DAO 接口及其实现类；</p>
+<p>需要在 DAO 接口的实现类上注入 sqlSessionFactory，创建 sqlSessionFactory 时需要读取 mapper.xml 到内存；</p>
+<p>通过创建 sqlSession 对象来调用 mapper 中的 sql 语句，在操作结束后需要手工进行提交，释放资源，返回结果；</p>
+<p>存在的问题：</p>
+<ul>
+<li>Dao 实现类方法体中存在重复代码：通过 SqlSessionFactory 创建 SqlSession，调用 SqlSession 的数据库操作方法；</li>
+<li>调用 sqlSession 的数据库操作方法需要指定 statement 的 id，这里存在硬编码，不得于开发维护；</li>
+<li>调用 sqlsession 方法时传入的变量，由于 sqlsession 方法使用泛型，即使变量类型传入错误，在编译阶段也不报错，不利于程序员开发。</li>
+</ul>
+<h4 id="Mapper-动态代理开发"><a href="#Mapper-动态代理开发" class="headerlink" title="Mapper 动态代理开发"></a>Mapper 动态代理开发</h4><p>只需要程序员编写 mapper 接口（就是 dao 接口）；</p>
+<p>在编写 mapper.xml（映射文件）和相应的 mapper.java 时需要遵循一个开发规范：</p>
+<ul>
+<li>mapper.xml 中namespace 就是 mapper.java 的类全路径；</li>
+<li>mapper.xml 中statement 的 id 和mapper.java 中方法名一致；</li>
+<li>mapper.xml 中statement 的 parameterType 指定输入参数的类型和 mapper.java 的方法输入参数类型一致；</li>
+<li>mapper.xml 中 statement 的 resultType 指定输出结果的类型和 mapper.java 的方法返回值类型一致。</li>
+</ul>
+<h2 id="输入映射和输出映射"><a href="#输入映射和输出映射" class="headerlink" title="输入映射和输出映射"></a>输入映射和输出映射</h2><h4 id="输入映射"><a href="#输入映射" class="headerlink" title="输入映射"></a>输入映射</h4><p>parameterType：指定输入参数类型，可以为简单类型、pojo、hashmap。</p>
+<p>MyBatis 通过 OGNL 从输入对象中获取参数值拼接在 sql 中。</p>
+<p>对于综合查询，建议 parameterType 使用包装的 pojo，有利于系统扩展。</p>
+<h4 id="输出映射"><a href="#输出映射" class="headerlink" title="输出映射"></a>输出映射</h4><p>MyBatis 将 sql 查询结果的一行记录数据映射为 pojo 对象（一对一），如果有多条数据则分别进行映射，并把对象放到容器 List 中（一对多）。</p>
+<p>resultType：查询到的列名和映射的 pojo 的属性名一致时才能映射成功。</p>
+<p>reusltMap：如果查询到的列名和映射的 pojo 的属性名不一致时，通过 resultMap 设置列名和属性名之间的映射关系，可以完成映射。</p>
+<h2 id="动态sql"><a href="#动态sql" class="headerlink" title="动态sql"></a>动态sql</h2><p>if判断</p>
+<p>where</p>
+<p>foreach</p>
+<p>sql片段</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-06-19T16:43:11.958Z" itemprop="dateUpdated">2019-06-20 00:43:11</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Noteligible">
+            Noteligible
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MyBatis/">MyBatis</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/06/19/MyBatis 概述/&title=《MyBatis 概述》 — Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/06/19/MyBatis 概述/&title=《MyBatis 概述》 — Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/06/19/MyBatis 概述/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MyBatis 概述》 — Noteligible' Blog&url=http://yoursite.com/2019/06/19/MyBatis 概述/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/06/19/MyBatis 概述/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/19/原生 JDBC 编程的问题总结/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">原生 JDBC 编程的问题总结</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Noteligible &copy; 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/06/19/MyBatis 概述/&title=《MyBatis 概述》 — Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/06/19/MyBatis 概述/&title=《MyBatis 概述》 — Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/06/19/MyBatis 概述/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MyBatis 概述》 — Noteligible' Blog&url=http://yoursite.com/2019/06/19/MyBatis 概述/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/06/19/MyBatis 概述/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACI0lEQVR42u3aS24CMRAFwNz/0pNtpAR4rz1Bwi6vRhFg1yyc/n19xev6sX7/Pfn8o+dkl9sWBgbGxzKupys51myX57vnZ8PAwDiH8Wjj5Hl2sd71CxgYGBjPN24DvgSAgYGB8f4Ltz0oBgYGxkoSm3x+dqyEfVsujoGB8YGMvFj2/ud/6W9gYGB8FOMqV96knIWG12hhYGDszcgvuBXMDQlqch4MDIwDGO2FuxKV5a2F/PVhYGDsypgV6PM2wOy7LRIDA+NMxnrRP+Hl1bMXgSYGBsZhjFliud7UzKkvsnAMDIytGfm4Q1toy0ltKouBgXECY2U8K79Ak4Pm4WYxloGBgbEpY1bWz0cokqMnzc7oPwkGBsYWjDzsm41BtMFifvQXPVgMDIztGG0zYD2Mu/n1YWBgHMCoc9xRSLdyvUbDFhgYGAcw2jJ9u2We3OYvFAMD4wTGbIMkNW0bkO1FXEe7GBgYH85oxyny0bGkZJbv+OIixsDAOIYx+7mc16bKxYvDwMA4hlE0DuNiXD6W0f5y0TvFwMDYjrEyJDEbxVhpRWBgYOzNuMo1+1Zb3M+Hxh52YjEwMDZizIK8WVg5a5Eu9TowMDA2YrSp5my069/DRwwMjAMYeUE/v1Lzwa/bcnEMDAyMcjgjb0YWx31edMPAwMCI2wn5RTwbufjjuxgYGAcw2mbAeoCYF92i6xsDA2NrRhuotZdve4HOEmYMDIxNGd9R37JQroaLhAAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Noteligible' Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Noteligible' Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
