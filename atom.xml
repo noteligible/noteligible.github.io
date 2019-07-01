@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-06-19T16:43:11.958Z</updated>
+  <updated>2019-07-01T08:26:37.964Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2019/07/01/%E4%BD%BF%E7%94%A8Navicat%E8%BF%9E%E6%8E%A5%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84MySQL%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    <id>http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/</id>
+    <published>2019-07-01T09:28:56.831Z</published>
+    <updated>2019-07-01T08:26:37.964Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>首先打开Navicat，文件 -&gt; 新建连接 -&gt; MySQL连接。</p><p>主机名填写 localhost，密码填写 连接数据库的密码。</p></li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src=".\img\1.png" alt="1" title>                </div>                <div class="image-caption">1</div>            </figure><ol start="2"><li><p>因为是连接服务器上的 MySQL，所以使用 SSH 连接。</p><p>主机填写阿里云ip地址，密码填写阿里云密码。</p></li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src=".\img\2.png" alt title>                </div>                <div class="image-caption"></div>            </figure><ol start="3"><li>测试连接</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;首先打开Navicat，文件 -&amp;gt; 新建连接 -&amp;gt; MySQL连接。&lt;/p&gt;
+&lt;p&gt;主机名填写 localhost，密码填写 连接数据库的密码。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;image-bubble&quot;&gt;
+   
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>MyBatis 概述</title>

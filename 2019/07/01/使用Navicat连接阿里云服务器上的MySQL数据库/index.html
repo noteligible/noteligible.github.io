@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>No title | Noteligible&#39; Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="首先打开Navicat，文件 -&amp;gt; 新建连接 -&amp;gt; MySQL连接。 主机名填写 localhost，密码填写 连接数据库的密码。                                                                                                1                因为是连接服务器上的 MySQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="No title">
+<meta property="og:url" content="http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/index.html">
+<meta property="og:site_name" content="Noteligible&#39; Blog">
+<meta property="og:description" content="首先打开Navicat，文件 -&amp;gt; 新建连接 -&amp;gt; MySQL连接。 主机名填写 localhost，密码填写 连接数据库的密码。                                                                                                1                因为是连接服务器上的 MySQ">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/img/1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/img/2.png">
+<meta property="og:updated_time" content="2019-07-01T08:26:37.964Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="No title">
+<meta name="twitter:description" content="首先打开Navicat，文件 -&amp;gt; 新建连接 -&amp;gt; MySQL连接。 主机名填写 localhost，密码填写 连接数据库的密码。                                                                                                1                因为是连接服务器上的 MySQ">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/img/1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="Noteligible&#39; Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Noteligible</h5>
+          <a href="mailto:791516928@qq.com" title="791516928@qq.com" class="mail">791516928@qq.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/noteligible" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis"></div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title"></h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-01T09:28:56.831Z" itemprop="datePublished" class="page-time">
+  2019-07-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-使用Navicat连接阿里云服务器上的MySQL数据库"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title"></h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-01 17:28:56" datetime="2019-07-01T09:28:56.831Z"  itemprop="datePublished">2019-07-01</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <ol>
+<li><p>首先打开Navicat，文件 -&gt; 新建连接 -&gt; MySQL连接。</p>
+<p>主机名填写 localhost，密码填写 连接数据库的密码。</p>
+</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src=".\img\1.png" alt="1" title>
+                </div>
+                <div class="image-caption">1</div>
+            </figure>
+
+<ol start="2">
+<li><p>因为是连接服务器上的 MySQL，所以使用 SSH 连接。</p>
+<p>主机填写阿里云ip地址，密码填写阿里云密码。</p>
+</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src=".\img\2.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<ol start="3">
+<li>测试连接</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-07-01T08:26:37.964Z" itemprop="dateUpdated">2019-07-01 16:26:37</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="http://yoursite.com">
+            <img src="/img/avatar.jpg" alt="Noteligible">
+            Noteligible
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&title=Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&title=Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=Noteligible' Blog&url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/19/MyBatis 概述/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">MyBatis 概述</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Noteligible &copy; 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&title=《No title》 — Noteligible' Blog&pic=http://yoursite.com/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&title=《No title》 — Noteligible' Blog&source=��Զ��Ҫ����" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《No title》 — Noteligible' Blog&url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/&via=http://yoursite.com" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://yoursite.com/2019/07/01/使用Navicat连接阿里云服务器上的MySQL数据库/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADL0lEQVR42u3aQZLiMBAEQP7/afa8sYupaokILNInYmawlfKhprv1eMTX88U1u8Or314/8frOj09c2NjY2DdhPy+v60U8g+ua/e/fJNtxfYfoJWFjY2Mfx74OhuvPyeLWn3i9ofmdsbGxsbHbEqWNxiQ4Z+vExsbGxl6PqPy5CfU6zLCxsbF/jd3+u79SqLTbkb+Aj/TSsLGxsb+e3S7lmz9/ZL6NjY2N/cXsZ3nlh2zyllMSQskoolBgY2NjH8RuG0ArDfq9hUpbZmBjY2P/ArsNnjZm2ub+rgCLxgPY2NjYt2WvlAd5U74dJMw2uog3bGxs7OPYu4am7aKTtlTewMrDGBsbG/s8dlSvjIIquXPehEpaRdF2YGNjYx/HbsMjL07apk/eYErW9vLn2NjY2Ieydx3KnG1HW2asxB42Njb2eexZkMxGvyvDg/x40JtnYWNjY/8Auw2G2Xa0Idq+njrAsLGxsW/LTh7QBsmsFGmHCvlIGBsbG/tUdrvEfGv2FhJtGytKLmxsbOzj2O0Qt230J02lvDhJIu3NFmNjY2MfxM4jKn/YCqx9VrvR2NjY2OexZ0dn8qjLB8azEBoWJ9jY2NgHsdfb7m1D5/rvk2ZTW5wsvXlsbGzsm7DXi43Zcncd+pkNhrGxsbFPYufU9bCZDXTzQzlFEYKNjY19c3beDIqGpuXYdVY8tKOF/9wNGxsb+yD2hqwrY2w2GNg1bHjMkhYbGxv7huz2WmkPtYPk9bEBNjY29knsWWDkg9W2n9N+qx1U/1WBYWNjYx/Bbg/rtO2etpG0PlrYVoFhY2Nj34rdDgDy4iRZ3K5gq2MPGxsb+2j2SqStj4RnMVY3pLCxsbGPZudt/TbM8lFx3kgajqKxsbGxj2DvGugm44TZUaHknvlYAhsbG/s8dhsAsyM4eWGTs/PPs5eBjY2NfS/2rkIibwPlpUjeuqqfjo2NjX0cuw2P2bi3jZx8VNBuJTY2NvYvs9vYa4/gJN9NAu/Nt7CxsbF/nt0OaPMIXClg8k3ExsbGPo89a9y0cZKMDdrGVj5sxsbGxj6VPWvQtE38okiIA3LXEBobGxv7tuw/obPZhRoz3R4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'Noteligible' Blog';
+            clearTimeout(titleTime);
+        } else {
+            document.title = 'Noteligible' Blog';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
